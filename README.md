@@ -13,6 +13,6 @@ The audio card supports recording from a stereo microphone, which we could split
 
 ### Server Routes
 
-To get our sound measures, send a GET request to: ```/measures```
-To see our visualization, send a GET request to: ```/visual```
+* To get our sound measures, send a GET request to: ```/measures```
+* To see our visualization, send a GET request to: ```/visual```
 
