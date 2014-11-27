@@ -10,6 +10,14 @@ app.get('/',function(req,res){
   res.send('Hello World');
  });
 
+app.get('/measures',function(req,res){
+  res.send("This is where our measurments might go for api calls!")
+});
+
+app.get('/visualization',function(req,res){
+  res.send("This is where our visualizer will go!")
+});
+
 
 app.listen(3000);
 console.log('listening on port 3000');
