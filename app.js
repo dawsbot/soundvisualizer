@@ -14,7 +14,7 @@ app.get('/measures',function(req,res){
   res.send("This is where our measurments might go for api calls!")
 });
 
-app.get('/visualization',function(req,res){
+app.get('/visual',function(req,res){
   res.send("This is where our visualizer will go!")
 });
 
