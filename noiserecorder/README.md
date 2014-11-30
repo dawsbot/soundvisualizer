@@ -59,14 +59,15 @@ sound card. To get a somewhat useful measure one could use the formula
 where 0 dB is the loudest possible output.
 
 The frequency bins are:
-0. 21.5-51.2 Hz
-1. 51.2-121 Hz
-2. 121-289 Hz
-3. 289-689 Hz
-4. 689-1638 Hz
-5. 1638-3897 Hz
-6. 3897-9270 Hz
-7. 9270-22050 Hz
+
+1.  21.5-51.2 Hz
+2.  51.2-121 Hz
+3.  121-289 Hz
+4.  289-689 Hz
+5.  689-1638 Hz
+6.  1638-3897 Hz
+7.  3897-9270 Hz
+8.  9270-22050 Hz
 
 where the exact limits can be computed with 
 ```python
@@ -85,12 +86,11 @@ The units are the same as for the noise level.
 * Downloaded and installed `2014-09-09-wheezy-raspbian.img` to the SD card.
 * Updated system through `apt-get`.
 * Downloaded Wolfson Pi drivers, [instructions here](http://www.element14.com/community/thread/31714/l/instructions-for-compiling-the-wolfson-audio-card-kernel-drivers-and-supported-use-cases).
-for instructions.
 * Compiled kernel with sound card support.
 * Downloaded PyAlsaAudio, [documentation here](http://pyalsaaudio.sourceforge.net/), [download](http://sourceforge.net/projects/pyalsaaudio/).
-* There seems to be a bug in the driver for the sound card, [kernel patch here](http://www.element14.com/community/thread/32623/l/driver-instability-issue)
+* There seems to be a bug in the driver for the sound card, [kernel patch available here](http://www.element14.com/community/thread/32623/l/driver-instability-issue).
 * Updated numpy to version 1.9.1 with the command `sudo pip-3.2 install numpy --upgrade`, since version 1.6 did not have `np.fft.rfftfreq()`.
 * Considering using low / high-pass filtering for the microphones. This removes static noise but could possibly remove some noise we actually want to record.
-  [instructions](http://www.element14.com/community/thread/32434/l/wolfson--voice-record-volume-too-low-using-dmic)
+  [instructions here](http://www.element14.com/community/thread/32434/l/wolfson--voice-record-volume-too-low-using-dmic).
 
 
