@@ -1,4 +1,4 @@
-# wolfson.py
+# wolfsonpi.py
 #
 # Code for recording from a Wolfson Pi with fixed parameters.
 # Works on my laptop if I change the 'default' parameter to whatever device

@@ -13,9 +13,10 @@ import numpy as np
 import pymongo
 from average import TimeAverages
 from pymongo import MongoClient
-from wolfson import AudioRecorder
 from histogram import hist,vhist
 from datetime import datetime
+import wolfsonpi
+import raspberrypi
 
 
 # Logarithmic binning class
@@ -104,7 +105,7 @@ class LocationObject:
 
 if __name__ == '__main__':
     # Reader and bin classes
-    recorder = AudioRecorder()
+    recorder = wolfsonpi.AudioRecorder()
     logbin   = LogBin(2048,44100,8)
 
     # Visualize? (This will not push any data to the mongodb server)
@@ -170,6 +171,7 @@ if __name__ == '__main__':
     # Infinite loop
     while True:
         start = time.time()
+        raspberrypi.led.set(1)
 
         # Read data from DMIC
         recorder.set_sources((0,1))
@@ -189,7 +191,9 @@ if __name__ == '__main__':
         # Limit to one read per 2 seconds
         pushtime = time.time() - start
         if pushtime < 2:
+            raspberrypi.led.set(0)
             print('Done in %.2f seconds...' % pushtime)
             time.sleep(2 - pushtime)
+            raspberrypi.led.set(1)
 
 
