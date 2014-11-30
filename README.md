@@ -13,6 +13,6 @@ The audio card supports recording from a stereo line-in, two on-card DMIC microp
 
 ### Server Routes
 
-* To get our sound measures, send a GET request to: ```/measures```
+* To get our sound measures, send a GET request to: ```/measures```. This will return a csv file that can be used by your application.
 * To see our visualization, send a GET request to: ```/visual```
 
