@@ -1,9 +1,9 @@
-// Run 'npm install' to install node dependencies
+// You need to install express locally with npm install. Global won't work. 
 var express = require('express');
 var app = express();
 
 app.engine('.html', require('ejs').__express);
-app.set('views', __dirname);
+app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
 app.get('/',function(req,res){
@@ -11,11 +11,12 @@ app.get('/',function(req,res){
  });
 
 app.get('/measures',function(req,res){
-  res.send("This is where our measurments might go for api calls!")
+  //this is where we put the datafile to be sent.  
+  res.sendfile('sample_data.csv')
 });
 
 app.get('/visual',function(req,res){
-  res.send("This is where our visualizer will go!")
+  res.render('visual.html');
 });
 
 
