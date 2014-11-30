@@ -9,7 +9,7 @@ Original idea proposition [here](https://github.com/dawsonbotsford/project_propo
 * Wolfson Pi Audio Card
 * Microphones
 
-The audio card supports recording from a stereo microphone, which we could split to record from two different sources. It also has on-board microphones, so we could possibly get three audio sources if the card supports streaming from both the on-board and the external microphones.
+The audio card supports recording from a stereo line-in, two on-card DMIC microphones and one headset microphone, so in total we can have five different noise sources. More details about the hardware and source code for the recorder can be found [here](/noiserecorder).
 
 ### Server Routes
 
