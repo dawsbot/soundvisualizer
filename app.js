@@ -19,6 +19,9 @@ app.get('/visual',function(req,res){
   res.render('visual.html');
 });
 
+app.get('/calendar',function(req,res){
+  res.render('calendar.html');
+});
 
 app.listen(3000);
 console.log('listening on port 3000');
