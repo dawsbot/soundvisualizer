@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Atlas sound calendar</title>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+
+</head>
+<body>
+  <div id="cal-heatmap"></div>
+  <script type="text/javascript">
+    var calendar = new CalHeatMap();
+    calendar.init({
+
+        weekStartOnMonday: 0,
+        range: 1, 
+        domain: "year",
+        subDomain: "day"
+    });
+  </script>
+</body>
