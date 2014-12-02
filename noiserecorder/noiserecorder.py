@@ -19,6 +19,11 @@ import wolfsonpi
 import raspberrypi
 
 
+# Current apt-get version of numpy is 1.6 which does not include np.fft.rfftfreq().
+# It takes time to rebuild the package, so we use our own version.
+def rfftfreq(n,step=1):
+    return np.arange(0,(n // 2) + 1) / (n*step)
+
 # Logarithmic binning class
 class LogBin:
     def __init__(self,sampleNum,sampleRate,num):
@@ -26,7 +31,7 @@ class LogBin:
         delimiters = np.logspace(np.log10(1.0/sampleNum), np.log10(1.0/2),num+1)*sampleRate
 
         # Get the frequencies for the FFT output points, without the 0 frequency
-        points = np.fft.rfftfreq(sampleNum,1.0/sampleRate)[1:]
+        points = rfftfreq(sampleNum,1.0/sampleRate)[1:]
 
         # Create sections
         sections = []
