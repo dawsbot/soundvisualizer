@@ -11,8 +11,26 @@ app.get('/',function(req,res){
  });
 
 app.get('/measures',function(req,res){
-  //this is where we put the datafile to be sent.  
-  res.sendfile('sample_data.csv')
+  query = req.query;
+
+  if (!query.hasOwnProperty('start')){
+    res.send('Bad start parameter, use format: /measures?start=55&finish=55')
+  }
+
+  if (!query.hasOwnProperty('finish')){ 
+    res.send('Bad finish parameter, use format: /measures?start=55&finish=55')
+  }
+
+  else { 
+    start = parseInt(query.start);
+    finish =  parseInt(query.finish);
+    res.send('Measures ' + start + ' ' + finish);
+
+    //make mongo query here using start and finish params 
+
+    //this is where we put the datafile to be sent.  
+    //res.sendfile('sample_data.csv')
+  } 
 });
 
 app.get('/visual',function(req,res){
