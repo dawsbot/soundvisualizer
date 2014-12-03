@@ -1,13 +1,29 @@
 // You need to install express locally with npm install. Global won't work. 
 var express = require('express');
+var mongoskin = require('mongoskin');
 var app = express();
+
+var username = 'readuser'; // TODO
+var password = 'ReadUserPassword'; // TODO
+var url = 'ds051980.mongolab.com'; // TODO
+var db = mongoskin.db('mongodb://'+username+':'+password+'@'+url+':51980/soundtest', {safe:true})
+
+
+
+
 
 app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
 app.get('/',function(req,res){
-  res.send('Hello World');
+
+var query;
+db.collection('noise').findOne(function(err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.send(result.date);
+  }); 
  });
 
 app.get('/measures',function(req,res){
