@@ -12,12 +12,19 @@
   <div id="cal-heatmap"></div>
   <script type="text/javascript">
     var calendar = new CalHeatMap();
+    var mydate = new Date();
+    var my_data = {
+      "1417564800":10
+      ,"1417590000":100
+    };    
     calendar.init({
-
-        weekStartOnMonday: 0,
-        range: 1, 
-        domain: "year",
-        subDomain: "day"
+      data: my_data,
+      start: new Date(),
+      domain: "day",
+      subDomain: "x_hour",
+      subDomainTextFormat: "%H",
+      range: 4,
+      cellSize: 31
     });
   </script>
 </body>
