@@ -6,6 +6,7 @@
   <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.min.js"></script>
   <link rel="stylesheet" href="http://cdn.jsdelivr.net/cal-heatmap/3.3.10/cal-heatmap.css" />
+  <link rel="stylesheet" href="./custom.css" />
 
 </head>
 <body>
@@ -21,10 +22,25 @@
       data: my_data,
       start: new Date(),
       domain: "day",
-      subDomain: "x_hour",
+      subDomain: "hour",
       subDomainTextFormat: "%H",
-      range: 4,
-      cellSize: 31
+      range: 7,
+      cellSize: 31,
+      rowLimit: 1,
+      verticalOrientation: true,
+      label: {
+        position: "left",
+        offset: {
+          x: 20,
+          y: 12
+        },
+        width: 110
+      },
+      legendColors: {
+        empty: "#ededed",
+        min: "#40ffd8",
+        max: "#f20013"
+      }
     });
   </script>
 </body>
