@@ -92,19 +92,34 @@ The units are the same as for the noise level.
 * Updated numpy to version 1.9.1 with the command `sudo pip-3.2 install numpy --upgrade`, since version 1.6 did not have `np.fft.rfftfreq()`.
 * Considering using low / high-pass filtering for the microphones. This removes static noise but could possibly remove some noise we actually want to record.
   [instructions here](http://www.element14.com/community/thread/32434/l/wolfson--voice-record-volume-too-low-using-dmic).
+* Changed SD card due to possibly corrupted old one.
+* Switched to precompiled kernel.
 
 
 ## Installation from scratch
 * Setup Raspberry Pi with `2014-09-09-wheezy-raspbian.img`.
-* Copy `kernel_wpi_patch.img` to `/boot/` and add the line `kernel kernel_wpi_patch.img` to the file `/boot/config.txt`. Reboot.
-* Update system with `sudo apt-get update` and `sudo apt-get upgrade`. (Optional)
-* Clone this repository to the Raspberry Pi.
-* Install necessary packages:
+* Run the following commands
 ```bash
-sudo apt-get install libasound2-dev python3-pip
+sudo raspi-config
+# reboot
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install libasound2-dev python3-pip vim tmux
 sudo pip-3.2 install pymongo pyalsaaudio
-# Optional
-#sudo apt-get install vim tmux
+
+# https://blog.georgmill.de/2014/04/29/compile-wolfson-audio-card-driver-for-kernel-3-12-y-a-new-try/
+wget http://blog.georgmill.de/wp-content/uploads/2014/04/kernelAndFirmware_wolfson_rt.tar.bz2
+mkdir kernelAndFirmware_wolfson_rt
+tar -xvjf kernelAndFirmware_wolfson_rt.tar.bz2 -C kernelAndFirmware_wolfson_rt
+sudo cp -r kernelAndFirmware_wolfson_rt/* /
+sudo sh -c 'echo kernel=kernel_new.img >> /boot/config.txt'
+
+sudo sync
+sudo reboot
+
+sudo chmod o+w /sys/class/leds/led0/{trigger,brightness}
+git clone https://github.com/dawsonbotsford/soundvisualizer
+# setup mongodb credentials in mongocred.txt
 ```
 
 ## Todo
