@@ -87,10 +87,29 @@ The units are the same as for the noise level.
 * Updated system through `apt-get`.
 * Downloaded Wolfson Pi drivers, [instructions here](http://www.element14.com/community/thread/31714/l/instructions-for-compiling-the-wolfson-audio-card-kernel-drivers-and-supported-use-cases).
 * Compiled kernel with sound card support.
-* Downloaded PyAlsaAudio, [documentation here](http://pyalsaaudio.sourceforge.net/), [download](http://sourceforge.net/projects/pyalsaaudio/).
+* Downloaded PyAlsaAudio, [documentation here](http://pyalsaaudio.sourceforge.net/), [download](http://sourceforge.net/projects/pyalsaaudio/). (Also available through `pip`.)
 * There seems to be a bug in the driver for the sound card, [kernel patch available here](http://www.element14.com/community/thread/32623/l/driver-instability-issue).
 * Updated numpy to version 1.9.1 with the command `sudo pip-3.2 install numpy --upgrade`, since version 1.6 did not have `np.fft.rfftfreq()`.
 * Considering using low / high-pass filtering for the microphones. This removes static noise but could possibly remove some noise we actually want to record.
   [instructions here](http://www.element14.com/community/thread/32434/l/wolfson--voice-record-volume-too-low-using-dmic).
 
 
+## Installation from scratch
+* Setup Raspberry Pi with `2014-09-09-wheezy-raspbian.img`.
+* Copy `kernel_wpi_patch.img` to `/boot/` and add the line `kernel kernel_wpi_patch.img` to the file `/boot/config.txt`. Reboot.
+* Update system with `sudo apt-get update` and `sudo apt-get upgrade`. (Optional)
+* Clone this repository to the Raspberry Pi.
+* Install necessary packages:
+```bash
+sudo apt-get install libasound2-dev python3-pip
+sudo pip-3.2 install pymongo pyalsaaudio
+# Optional
+#sudo apt-get install vim tmux
+```
+
+## Todo
+* Configure Raspberry Pi to auto-start program on power-up.
+* Make sure device keeps going if network / power fails.
+* Application configurable sound levels.
+* Application configurable low-/high-pass filter.
+* Decide on whether the sound should be filtered, and what sound card settings are the best.
