@@ -94,6 +94,8 @@ The units are the same as for the noise level.
   [instructions here](http://www.element14.com/community/thread/32434/l/wolfson--voice-record-volume-too-low-using-dmic).
 * Changed SD card due to possibly corrupted old one.
 * Switched to precompiled kernel.
+* Compiled kernel again, using [this guide](https://blog.georgmill.de/2014/04/29/compile-wolfson-audio-card-driver-for-kernel-3-12-y-a-new-try/) with [this kernel patch](http://www.element14.com/community/thread/32623/l/driver-instability-issue).
+* Configured Raspberry Pi to autostart program on power up.
 
 
 ## Installation from scratch
@@ -107,23 +109,23 @@ sudo apt-get upgrade
 sudo apt-get install libasound2-dev python3-pip vim tmux
 sudo pip-3.2 install pymongo pyalsaaudio
 
-# https://blog.georgmill.de/2014/04/29/compile-wolfson-audio-card-driver-for-kernel-3-12-y-a-new-try/
-wget http://blog.georgmill.de/wp-content/uploads/2014/04/kernelAndFirmware_wolfson_rt.tar.bz2
-mkdir kernelAndFirmware_wolfson_rt
-tar -xvjf kernelAndFirmware_wolfson_rt.tar.bz2 -C kernelAndFirmware_wolfson_rt
-sudo cp -r kernelAndFirmware_wolfson_rt/* /
-sudo sh -c 'echo kernel=kernel_new.img >> /boot/config.txt'
+git clone https://github.com/dawsonbotsford/soundvisualizer
+mkdir patched_kernel
+tar -xvjf patched_kernel.tar.bz2 -C patched_kernel
+sudo cp -r patched_kernel/* /
+sudo sh -c 'echo kernel=kernel_3.12_patch.img >> /boot/config.txt'
 
 sudo sync
 sudo reboot
 
-sudo chmod o+w /sys/class/leds/led0/{trigger,brightness}
+# add the line below to /etc/rc.local
+# /bin/chmod o+w /sys/class/leds/led0/trigger /sys/class/leds/led0/brightness
+
 git clone https://github.com/dawsonbotsford/soundvisualizer
 # setup mongodb credentials in mongocred.txt
 ```
 
 ## Todo
-* Configure Raspberry Pi to auto-start program on power-up.
 * Make sure device keeps going if network / power fails.
 * Application configurable sound levels.
 * Application configurable low-/high-pass filter.
