@@ -49,8 +49,8 @@ var yAxis = d3.svg.axis()
     .orient("left");
 
 var line = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
+    .x(function(d) { return x(d.timestamp); })
+    .y(function(d) { return y(d.value); });
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -58,14 +58,16 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.tsv("data.tsv", function(error, data) {
-  data.forEach(function(d) {
-    d.date = parseDate(d.date);
-    d.close = +d.close;
-  });
+d3.json("data.json", function(error, data) {
+ // data.forEach(function(d) {
+    //d.date = +(d.date);
+    //d.close = +d.close;
+	//d.date = 10;
+	//d.close = 100;
+	//});
 
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain(d3.extent(data, function(d) { return d.close; }));
+  x.domain(d3.extent(data, function(d) { return d.timestamp; }));
+  y.domain(d3.extent(data, function(d) { return d.value; }));
 
   svg.append("g")
       .attr("class", "x axis")
@@ -86,6 +88,7 @@ d3.tsv("data.tsv", function(error, data) {
       .datum(data)
       .attr("class", "line")
       .attr("d", line);
+
 });
 
 </script>
