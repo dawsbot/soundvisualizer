@@ -110,4 +110,6 @@ if aggregate_result:
 else:
     print('Nothing to update')
 
-
+# Cleanup
+rem_result = noisedb.remove({'date' : {'$lt' : datetime.now() - timedelta(hours=2*24)}})
+print('Removed    %d noise entries' % rem_result['n'])
