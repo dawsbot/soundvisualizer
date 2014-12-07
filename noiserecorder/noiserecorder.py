@@ -132,7 +132,7 @@ if __name__ == '__main__':
             # bin_freq = logbin(frame_dB)
 
             if sys.argv[1] == 'hist':
-                hist(bin_freq,0,250,32,'## ')
+                hist(bin_freq,0,250,32,'##### ')
             else:
                 vhist(bin_freq,0,250,64,logbin.freqrange)
             print('[std,mean]:     %8.2f, %8.2f' % (frame_std, frame_mean))
