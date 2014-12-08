@@ -18,14 +18,15 @@ app.set('view engine', 'html');
 
 app.get('/',function(req,res){
 
+//return a random date to test connection to the db
 var query;
 db.collection('noise').findOne(function(err, result) {
-      if (err) throw err;
-      console.log(result);
+      if (err) throw err; 
       res.send(result.date);
   }); 
  });
 
+//this was supposed to be the API, depricated as of now. 
 app.get('/measures',function(req,res){
   query = req.query;
 
@@ -49,12 +50,15 @@ app.get('/measures',function(req,res){
   } 
 });
 
+
+//path to austin's visualization
 app.get('/visual',function(req,res){
-  res.render('visual.html');
+  res.render('visual/visual.html');
 });
 
+//path to the calendar
 app.get('/calendar',function(req,res){
-  res.render('calendar.html');
+  res.render('calendar/calendar.html');
 });
 
 app.listen(3000);
