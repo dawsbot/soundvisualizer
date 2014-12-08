@@ -5,11 +5,15 @@
 # Niklas Fejes 2014
 
 import os
+import subprocess
 from datetime import datetime,timedelta
 from time import sleep
 
 
-def run(): os.system('python3 statistics.py')
+#def run(): os.system('python3 statistics.py')
+def run():
+    subprocess.call('python3 statistics.py', shell=True)
+    subprocess.call('python3 iplog.py', shell=True)
 period = 15 # minutes
 delta = timedelta(minutes=period)
 
@@ -21,6 +25,9 @@ while True:
     print('Running statistics at %s:' % str(d))
     run()
     d += delta
-    sleep((d - datetime.now()).total_seconds())
+    sleep_time = (d - datetime.now()).total_seconds()
+    if sleep_time > 0:
+        print('Sleeping for %.2f s...' % sleep_time)
+        sleep(sleep_time)
     
 
