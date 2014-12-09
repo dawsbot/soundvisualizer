@@ -5,8 +5,8 @@ var app = express();
 
 var username = 'readuser'; // TODO
 var password = 'ReadUserPassword'; // TODO
-var url = 'ds051980.mongolab.com'; // TODO
-var db = mongoskin.db('mongodb://'+username+':'+password+'@'+url+':51980/soundtest', {safe:true})
+var url = '104.236.60.203'; // TODO
+var db = mongoskin.db('mongodb://'+username+':'+password+'@'+url+':27018/sound', {safe:true})
 
 
 
@@ -18,12 +18,13 @@ app.set('view engine', 'html');
 
 app.get('/',function(req,res){
 
-//return a random date to test connection to the db
-var query;
-db.collection('noise').findOne(function(err, result) {
-      if (err) throw err; 
-      res.send(result.date);
-  }); 
+    var query;
+    db.collection('noise').findOne(function(err, result) {
+          if (err) throw err; 
+          
+          console.log(result.noise.avg60s);
+          res.send(result);
+      }); 
  });
 
 //this was supposed to be the API, depricated as of now. 
@@ -57,9 +58,26 @@ app.get('/visual',function(req,res){
 });
 
 //path to the calendar
-app.get('/calendar',function(req,res){
-  res.render('calendar/calendar.html');
+app.get('/equalizer',function(req,res){
+  //we want our mongo query to find data a year back, break it down by day, and find the avg of the averages over that day 
+  
+  var end = new Date();
+  //start date is year plus 1900; the same month ; 7 days before which rolls back properly 
+  var start = end;
+  start.setDate(end.getDate()-7)
+
+  var query = {'date':{$gte:start,$lt:end}};
+  var projection = {};
+
+  db.collection('noise').findOne(function(err, result) {
+        if (err) throw err; 
+        
+        console.log(result.noise.avg60s);
+       
+  }); 
+  res.render('equalizer/equalizer.html');
 });
 
-app.listen(3000);
-console.log('listening on port 3000');
+app.listen(13000);
+console.log('listening on port 13000');
+
