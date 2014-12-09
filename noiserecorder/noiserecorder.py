@@ -168,9 +168,9 @@ if __name__ == '__main__':
 
     # Location objects
     location = [
-        LocationObject(noisedb,'niklas L'),
-        LocationObject(noisedb,'niklas R'),
-        LocationObject(noisedb,'niklas X')
+        LocationObject(noisedb,'raspberry L'),
+        LocationObject(noisedb,'raspberry R'),
+        LocationObject(noisedb,'line-in R')
     ]
 
     # Infinite loop

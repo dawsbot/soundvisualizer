@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "boot at $(date)" >> autostart.log
+#tmux new-session -d -s autostart 'cd soundvisualizer/noiserecorder && python3 noiserecorder.py'
+touch ~/reboot_on_fail
 dir=/home/pi/soundvisualizer/noiserecorder/
-tmux new-session -d -s autostart "bash -c 'cd $dir && python3 noiserecorder.py ; bash'" \
+tmux new-session -d -s autostart "bash -c 'cd $dir && python3 noiserecorder.py ; ~/rebooter.sh ; bash'" \
   \; split-window  -dh           "bash -c 'cd $dir && python3 statrunner.py ; bash'"
