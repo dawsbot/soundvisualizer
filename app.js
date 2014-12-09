@@ -56,7 +56,10 @@ app.get('/measures',function(req,res){
 app.get('/visual',function(req,res){
   res.render('visual/visual.html');
 });
-
+//path for jake's visualization
+app.get('/livevisual',function(req,res){
+  res.render('livevisual/livevisual.html');
+});
 //path to the calendar
 app.get('/equalizer',function(req,res){
   //we want our mongo query to find data a year back, break it down by day, and find the avg of the averages over that day 
