@@ -1,0 +1,3 @@
+asyncio==3.4.1
+websockets==2.3
+IPython==2.3
