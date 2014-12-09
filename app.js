@@ -61,20 +61,26 @@ app.get('/visual',function(req,res){
 app.get('/equalizer',function(req,res){
   //we want our mongo query to find data a year back, break it down by day, and find the avg of the averages over that day 
   
-  var end = new Date();
+  //var end = new Date();
   //start date is year plus 1900; the same month ; 7 days before which rolls back properly 
-  var start = end;
-  start.setDate(end.getDate()-7)
-
-  var query = {'date':{$gte:start,$lt:end}};
+  //var start = end;
+  //start.setDate(end.getDate()-7)
+ console.log('++++++++++++++++++++++++++++++++++') 
+  
+  db.collection('noise').find().sort({datefield:-1}).limit(10).toArray(function(err,result){
+   if (err) throw err;
+   console.log(result);
+  })
+  
+  //var query = {'date':{$gte:start,$lt:end}};
   var projection = {};
 
-  db.collection('noise').findOne(function(err, result) {
+  /*db.collection('noise').findOne(function(err, result) {
         if (err) throw err; 
         
         console.log(result.noise.avg60s);
        
-  }); 
+  });*/ 
   res.render('equalizer/equalizer.html');
 });
 
