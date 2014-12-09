@@ -12,12 +12,25 @@
   <div id="cal-heatmap"></div>
   <script type="text/javascript">
     //d3 vis tips http://kamisama.github.io/cal-heatmap/#animationDuration
+
+    var end = new Date();
+    //start date is year plus 1900; the same month ; 7 days before which rolls back pr
+    var begin = end;
+    begin.setDate(end.getDate()-6)
+
+
+
+
     var calendar = new CalHeatMap();
     calendar.init({
-        weekStartOnMonday: 0,
-        range: 1, 
-        domain: "year",
-        subDomain: "day"
+      
+      domain: "day",
+      range: 7,
+      displayLegend: false, 
+      start: begin, 
+      label: {
+          position: "top"
+        }
     });
   </script>
 </body>
