@@ -12,13 +12,9 @@ app.engine('.html', require('ejs').__express);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'html');
 
+// combined visualizations
 app.get('/',function(req,res){
-  var query;
-  db.collection('noise').findOne(function(err, result) {
-    if (err) throw err;
-    console.log(result.noise.avg60s);
-    res.send(result);
-  });
+  res.render('index.html');
 });
 
 // path to Austin's equalizer
@@ -37,27 +33,6 @@ app.get('/livevisualdata',function(req,res){
    if (err) throw err;
    res.json(result);
   })
-});
-
-//this was supposed to be the API, depricated as of now.
-app.get('/measures',function(req,res){
-  query = req.query;
-
-  if (!query.hasOwnProperty('start')){
-    res.send('Bad start parameter, use format: /measures?start=55&finish=55')
-  }
-
-  if (!query.hasOwnProperty('finish')){ 
-    res.send('Bad finish parameter, use format: /measures?start=55&finish=55')
-  }
-  else {
-    start = parseInt(query.start);
-    finish =  parseInt(query.finish);
-    res.send('Measures ' + start + ' ' + finish);
-    //make mongo query here using start and finish params
-    //this is where we put the datafile to be sent.
-    //res.sendfile('sample_data.csv')
-  }
 });
 
 app.listen(13000);

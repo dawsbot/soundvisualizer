@@ -16,3 +16,6 @@ The audio card supports recording from a stereo line-in, two on-card DMIC microp
 * CURRENTLY DEPRICATED! To get our sound measures, send a GET request to: ```/measures?start=1&finish=1000```. ```start``` is the start time to be used in our mongo query, ```finish``` is our finish time. We can possibly do this with Unix epoch time. Still under construction. 
 * To see our sound visualization, send a GET request to: ```/visual```. This is stored in /views/visual/visual.html
 * To see our calendar visualization, send a GET request to: ```/calendar```. THis is stored in /views/calendar/calendar.html
+
+### Testing Locally
+* Run `node app.js` from the root directory to see the combined visualizations
