@@ -56,9 +56,16 @@ app.get('/measures',function(req,res){
 app.get('/visual',function(req,res){
   res.render('visual/visual.html');
 });
-//path for jake's visualization
+//path for jake's visualization to render the html file
 app.get('/livevisual',function(req,res){
   res.render('livevisual/livevisual.html');
+});
+//path for jake's visualization to render the html file
+app.get('/livevisualdata',function(req,res){
+  data = db.collection('noise').find({location:'microphone'}).sort({"date":-1}).limit(1).toArray(function(err,result){
+   if (err) throw err;
+   res.json(result);
+  })
 });
 //path to the calendar
 app.get('/equalizer',function(req,res){

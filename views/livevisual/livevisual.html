@@ -22,6 +22,7 @@ svg {
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 
 var n = 40,
@@ -72,13 +73,27 @@ var path = svg.append("g")
     .attr("class", "line")
     .attr("d", line);
 
-tick();
+function getData(){
+  // $.getJSON( "/livevisualdata",function( data ) {
+  //   jsonData = data[0].noise.level;
+  //   return jsonData;
+  // });
+  $.ajax({url: "/livevisualdata",async:"false",success: function(data){
+    var jsonData = data[0].noise.level;
+    //console.log(jsonData);
+    callback(jsonData);
+    }
+  });
+}
 
 function tick() {
 
+  var jsonData;
   // push a new data point onto the back
+  jsonData = getData();
+  console.log(jsonData);
   data.push(Math.random()*50);
-
+  //data.push(jsonData);
   // redraw the line, and slide it to the left
   path
       .attr("d", line)
@@ -93,5 +108,5 @@ function tick() {
   data.shift();
 
 }
-
+tick();
 </script>
