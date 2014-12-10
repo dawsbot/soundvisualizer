@@ -73,26 +73,17 @@ var path = svg.append("g")
     .attr("class", "line")
     .attr("d", line);
 
-function getData(){
-  // $.getJSON( "/livevisualdata",function( data ) {
-  //   jsonData = data[0].noise.level;
-  //   return jsonData;
-  // });
-  $.ajax({url: "/livevisualdata",async:"false",success: function(data){
-    var jsonData = data[0].noise.level;
-    //console.log(jsonData);
-    callback(jsonData);
-    }
-  });
-}
-
 function tick() {
 
   var jsonData;
   // push a new data point onto the back
-  jsonData = getData();
-  console.log(jsonData);
-  data.push(Math.random()*50);
+  $.ajax({url: "/livevisualdata",async:"false",success: function(response){
+    jsonData = response[0].noise.level;
+    data.push(jsonData);
+    }
+  });
+  //console.log(jsonData);
+  //data.push(Math.random()*50);
   //data.push(jsonData);
   // redraw the line, and slide it to the left
   path
