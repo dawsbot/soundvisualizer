@@ -60,6 +60,12 @@ app.get('/visual',function(req,res){
 app.get('/livevisual',function(req,res){
   res.render('livevisual/livevisual.html');
 });
+app.get('/livedaily',function(req,res){
+  res.render('livedaily/livedaily.html');
+});
+app.get('/livedaily1',function(req,res){
+  res.render('livedaily/livedaily1.html');
+});
 //path for jake's visualization to render the html file
 app.get('/livevisualdata',function(req,res){
   data = db.collection('noise').find({location:'microphone'}).sort({"date":-1}).limit(1).toArray(function(err,result){

@@ -25,17 +25,19 @@ svg {
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
 
-var x_length = 200,
-    now = new Date(Date.now()),
+var n = 200,
+    duration = 750,
+    now = new Date(Date.now() - duration),
     random = d3.random.normal(0, .2),
-    data = d3.range(x_length).map(random);
+    data = d3.range(n).map(random);
 
 var margin = {top: 20, right: 20, bottom: 20, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
 var x = d3.scale.linear()
-    .domain([0, x_length - 1])
+    .domain([now - (n - 2) * duration, now - duration])
+    //.domain([0, n - 1])
     .range([0, width]);
 
 var y = d3.scale.linear()
@@ -43,7 +45,8 @@ var y = d3.scale.linear()
     .range([height, 0]);
 
 var line = d3.svg.line()
-    .x(function(d, i) { return x(i); })
+    //.x(function(d, i) { return x(i); })
+    .x(function(d, i) { return x(now - (n - 1 - i) * duration); })
     .y(function(d, i) { return y(d); });
 
 var svg = d3.select("body").append("svg")
@@ -67,6 +70,11 @@ svg.append("g")
     .attr("class", "y axis")
     .call(d3.svg.axis().scale(y).orient("left"));
 
+var axis = svg.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height + ")")
+  .call(x.axis = d3.svg.axis().scale(x).orient("bottom"));
+
 var path = svg.append("g")
     .attr("clip-path", "url(#clip)")
   .append("path")
@@ -77,6 +85,11 @@ var path = svg.append("g")
 function tick() {
 
   var jsonData;
+  now = new Date();
+  x.domain([now - (n -2) * duration, now - duration]);
+  y.domain([0, d3.max(data)]);
+
+  axis.call(x.axis);
   // push a new data point onto the back
   $.ajax({url: "/livevisualdata",async:"false",success: function(response){
     jsonData = response[0].noise.avg15s;
