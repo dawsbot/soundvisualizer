@@ -36,6 +36,11 @@ class AudioRecorder:
         # Open input
         self.__input_open()
 
+        # amixer -Dhw:0 cset name='IN3L Volume' 20
+        basecmd = 'amixer -q -Dhw:0 cset'.split()
+        d,v = 'IN3L Volume','31'
+        call(basecmd + ["name='%s'" % d,v])
+
     # Initiate input
     def __input_open(self):
         self.__input_close()

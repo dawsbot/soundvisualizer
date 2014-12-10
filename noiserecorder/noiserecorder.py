@@ -186,6 +186,7 @@ if __name__ == '__main__':
 
     # Last push second
     lsec = datetime.now().second
+    nsec = 0
 
     # led state
     led = False
@@ -204,6 +205,7 @@ if __name__ == '__main__':
         # Parse frames
         f0 = location[0].parseframe(dmic, date)
         f1 = location[1].parseframe(linein, date)
+        nsec += 1
 
         # Update websocket
         wsdata[1] = f1['frequency']['values']
@@ -214,7 +216,8 @@ if __name__ == '__main__':
         if lsec != datetime.now().second:
             lsec = datetime.now().second
             noisedb.insert([f0,f1])
-            print('pushed 2 frames')
+            print('pushed frames, parsed %d last second' % nsec)
+            nsec = 0
         #else:
         #    print('.')
 
