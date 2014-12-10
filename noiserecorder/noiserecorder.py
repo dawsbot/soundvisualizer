@@ -17,6 +17,7 @@ from histogram import hist,vhist
 from datetime import datetime
 import wolfsonpi
 import raspberrypi
+import websocketserver
 
 
 # Current apt-get version of numpy is 1.6 which does not include np.fft.rfftfreq().
@@ -66,14 +67,13 @@ class LogBin:
 # Location object
 # A class that handles the properties of a location
 class LocationObject:
-    def __init__(self,db,location,do_freq=True):
+    def __init__(self,location,do_freq=True):
         self.location = location
         self.averages = TimeAverages([15,30,60])
         self.do_freq = do_freq
-        self.db = db
 
     # Parse frame and insert in database
-    def pushframe(self,frame,date):
+    def parseframe(self,frame,date):
         # Calculate noise, evaluated as the standard deviation of the signal
         noise = np.std(frame)
 
@@ -107,9 +107,7 @@ class LocationObject:
         for i,t in enumerate(self.averages.times):
             entry['noise']['avg%ds'%t] = avgs[i]
 
-        # Push the data
-        self.db.insert(entry)
-        print('pushed frame for "%s"' % self.location)
+        return entry
 
 
 
@@ -117,6 +115,7 @@ if __name__ == '__main__':
     # Reader and bin classes
     recorder = wolfsonpi.AudioRecorder()
     logbin   = LogBin(2048,44100,18)
+    wsdata   = [0,np.zeros(18),0]
 
     # Visualize? (This will not push any data to the mongodb server)
     if len(sys.argv) == 3 and sys.argv[1] in ['hist','vhist']:
@@ -145,6 +144,7 @@ if __name__ == '__main__':
             print('freq [min,max]: %8.2f, %8.2f' % (min(frame_freq), max(frame_freq)))
 
     # MongoDB credentials
+    print('Connecting to mongo')
     try:
         f = open('mongocred.txt','r')
         mongocred = f.readline().strip()
@@ -171,46 +171,60 @@ if __name__ == '__main__':
         print("  pymongo.errors.OperationFailure:\n  {0}".format(str(e)))
         sys.exit(1)
 
+    # Websocket
+    print('Setting up websocket...')
+    websocketserver.setup(3000,wsdata)
+
     # Location objects
     location = [
-        #LocationObject(noisedb,'raspberry L',False),
-        LocationObject(noisedb,'raspberry',False),
-        LocationObject(noisedb,'microphone',True)
+        LocationObject('raspberry',False),
+        LocationObject('microphone',True)
     ]
 
+    # Read data from DMIC and line-in
+    recorder.set_sources((0,2))
+
+    # Last push second
+    lsec = datetime.now().second
+
+    # led state
+    led = False
+
     # Infinite loop
+    print('Starting loop!')
     while True:
         start = time.time()
-        raspberrypi.led.set(1)
+        led = not led
+        raspberrypi.led.set(led)
 
-        # Read data from DMIC
-     #   recorder.set_sources((0,1))
-     #   dmic_left,dmic_right = recorder.read()
-     #   dmic_date = datetime.now()
-
-     #   # Read data from Line-in
-     #   recorder.set_sources((2,3))
-     #   li_left,li_right = recorder.read()
-     #   li_date = datetime.now()
-
-        # Read data from DMIC and line-in
-        recorder.set_sources((0,2))
+        # Read data
         dmic,linein = recorder.read()
-        rec_date = datetime.now()
-        rtime = time.time()
+        date = datetime.now()
 
-        # Push frames
-        location[0].pushframe(dmic, rec_date)
-        location[1].pushframe(linein, rec_date)
-     #   location[2].pushframe(li_right, li_date)
+        # Parse frames
+        f0 = location[0].parseframe(dmic, date)
+        f1 = location[1].parseframe(linein, date)
+
+        # Update websocket
+        wsdata[1] = f1['frequency']['values']
+        wsdata[2] = f1['noise']
+        wsdata[0] += 1
+
+        # Push the data
+        if lsec != datetime.now().second:
+            lsec = datetime.now().second
+            noisedb.insert([f0,f1])
+            print('pushed 2 frames')
+        #else:
+        #    print('.')
 
         # Limit to one read per 1 seconds
-        pushtime = time.time() - start
-        if pushtime < 1:
-            raspberrypi.led.set(0)
-            #print('Done in %.2f seconds...' % pushtime)
-            print('Done in %.2f+%.2f seconds...' % (rtime-start, pushtime - (rtime-start)))
-            time.sleep(1 - pushtime)
-            raspberrypi.led.set(1)
+        #pushtime = time.time() - start
+        #if pushtime < 1:
+        #    raspberrypi.led.set(0)
+        #    #print('Done in %.2f seconds...' % pushtime)
+        #    print('Done in %.2f+%.2f seconds...' % (rtime-start, pushtime - (rtime-start)))
+        #    time.sleep(1 - pushtime)
+        #    raspberrypi.led.set(1)
 
 
