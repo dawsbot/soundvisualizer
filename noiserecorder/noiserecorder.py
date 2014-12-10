@@ -66,9 +66,10 @@ class LogBin:
 # Location object
 # A class that handles the properties of a location
 class LocationObject:
-    def __init__(self,db,location):
+    def __init__(self,db,location,do_freq=True):
         self.location = location
         self.averages = TimeAverages([15,30,60])
+        self.do_freq = do_freq
         self.db = db
 
     # Parse frame and insert in database
@@ -80,11 +81,6 @@ class LocationObject:
         self.averages.add(noise)
         avgs = self.averages.mean()
 
-        # Compute Fourier transform, and bin the frequencies logarithmically
-        frame_fft  = np.fft.rfft(frame) / len(frame)
-        frame_freq = abs(frame_fft[1:])
-        bin_freq = logbin(frame_freq)
-
         # Create database entry
         entry = {
             'location' : self.location,
@@ -92,11 +88,20 @@ class LocationObject:
             'noise' : {
                 'level' : noise
             },
-            'frequency' : {
-                'values' : bin_freq,
-                'type' : 'logbin8'
-            }
         }
+
+        # Compute Fourier transform, and bin the frequencies logarithmically
+        if self.do_freq:
+            frame_fft  = np.fft.rfft(frame) / len(frame)
+            frame_freq = abs(frame_fft[1:])
+            bin_freq = logbin(frame_freq)
+            entry['frequency'] = {
+                'values' : bin_freq,
+                'type' : 'logbin18'
+            }
+        else:
+            bin_freq = [float('nan')] * 18
+            entry['frequency'] = { 'type' : 'none' }
 
         # Add average noise levels
         for i,t in enumerate(self.averages.times):
@@ -111,7 +116,7 @@ class LocationObject:
 if __name__ == '__main__':
     # Reader and bin classes
     recorder = wolfsonpi.AudioRecorder()
-    logbin   = LogBin(2048,44100,8)
+    logbin   = LogBin(2048,44100,18)
 
     # Visualize? (This will not push any data to the mongodb server)
     if len(sys.argv) == 3 and sys.argv[1] in ['hist','vhist']:
@@ -168,9 +173,9 @@ if __name__ == '__main__':
 
     # Location objects
     location = [
-        LocationObject(noisedb,'raspberry L'),
-        LocationObject(noisedb,'raspberry R'),
-        LocationObject(noisedb,'line-in R')
+        #LocationObject(noisedb,'raspberry L',False),
+        LocationObject(noisedb,'raspberry',False),
+        LocationObject(noisedb,'microphone',True)
     ]
 
     # Infinite loop
@@ -179,25 +184,32 @@ if __name__ == '__main__':
         raspberrypi.led.set(1)
 
         # Read data from DMIC
-        recorder.set_sources((0,1))
-        dmic_left,dmic_right = recorder.read()
-        dmic_date = datetime.now()
+     #   recorder.set_sources((0,1))
+     #   dmic_left,dmic_right = recorder.read()
+     #   dmic_date = datetime.now()
 
-        # Read data from Line-in
-        recorder.set_sources((2,3))
-        li_left,li_right = recorder.read()
-        li_date = datetime.now()
+     #   # Read data from Line-in
+     #   recorder.set_sources((2,3))
+     #   li_left,li_right = recorder.read()
+     #   li_date = datetime.now()
+
+        # Read data from DMIC and line-in
+        recorder.set_sources((0,2))
+        dmic,linein = recorder.read()
+        rec_date = datetime.now()
+        rtime = time.time()
 
         # Push frames
-        location[0].pushframe(dmic_left, dmic_date)
-        location[1].pushframe(dmic_right, dmic_date)
-        location[2].pushframe(li_right, li_date)
+        location[0].pushframe(dmic, rec_date)
+        location[1].pushframe(linein, rec_date)
+     #   location[2].pushframe(li_right, li_date)
 
-        # Limit to one read per 2 seconds
+        # Limit to one read per 1 seconds
         pushtime = time.time() - start
         if pushtime < 1:
             raspberrypi.led.set(0)
-            print('Done in %.2f seconds...' % pushtime)
+            #print('Done in %.2f seconds...' % pushtime)
+            print('Done in %.2f+%.2f seconds...' % (rtime-start, pushtime - (rtime-start)))
             time.sleep(1 - pushtime)
             raspberrypi.led.set(1)
 
