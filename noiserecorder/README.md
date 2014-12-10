@@ -60,14 +60,25 @@ where 0 dB is the loudest possible output.
 
 The frequency bins are:
 
-1.  21.5-51.2 Hz
-2.  51.2-121 Hz
-3.  121-289 Hz
-4.  289-689 Hz
-5.  689-1638 Hz
-6.  1638-3897 Hz
-7.  3897-9270 Hz
-8.  9270-22050 Hz
+1.     21-   31 Hz
+2.     31-   46 Hz
+3.     46-   68 Hz
+4.     68-  100 Hz
+5.    100-  147 Hz
+6.    147-  217 Hz
+7.    217-  318 Hz
+8.    318-  468 Hz
+9.    468-  689 Hz
+10.    689- 1012 Hz
+11.   1012- 1488 Hz
+12.   1488- 2187 Hz
+13.   2187- 3215 Hz
+14.   3215- 4725 Hz
+15.   4725- 6945 Hz
+16.   6945-10207 Hz
+17.  10207-15002 Hz
+18.  15002-22050 Hz
+
 
 where the exact limits can be computed with 
 ```python
