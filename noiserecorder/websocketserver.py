@@ -33,7 +33,7 @@ def __handler(websocket, path):
         if t != updateId:
             updateId = t
             yield from websocket.send(json.dumps(__data[n]))
-        yield from asyncio.sleep(.001)
+        yield from asyncio.sleep(.05)
 
 
 def __loop_in_thread(loop):
