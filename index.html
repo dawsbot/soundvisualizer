@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <script>
+    var conn = new WebSocket("ws://10.202.117.156:3000");
+
+    conn.onopen = function (ev) {
+      console.log("connected");
+    };
+
+    conn.onmessage = function (ev) {
+      console.log(ev);
+    };
+  </script>
+</html>
