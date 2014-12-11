@@ -51,7 +51,7 @@ var svg = d3.select("body").append("svg")
         }
          
       });
-      console.log(data);
+      data.shift();//pop off garbage last averaged point
 
   x.domain(d3.extent(data, function(d) { return d.timestamp; }));
   y.domain(d3.extent(data, function(d) { return d.value; }));
