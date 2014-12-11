@@ -1,7 +1,10 @@
-var w = 600;
-var h = 250;
-var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-  11, 12, 15, 20, 18, 17, 16, 18 ];
+  var margin = {top: 50, right: 50, bottom: 50, left: 50};
+
+  var w = 600 - margin.left - margin.right;
+  var h = 250 - margin.top - margin.bottom;
+
+  // Initialize all rects to zero
+  var dataset = Array.apply(null, new Array(18)).map(Number.prototype.valueOf,0);
 
   var xScale = d3.scale.ordinal()
   .domain(d3.range(dataset.length))
@@ -11,11 +14,12 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
   .domain([0, d3.max(dataset)])
   .range([0, h]);
 
-  //Create SVG element
-  var svg = d3.select("body")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h + 20);
+  // Create SVG element with padding
+  var svg = d3.select("body").append("svg")
+              .attr("width", w + margin.left + margin.right)
+              .attr("height", h + margin.top + margin.bottom)
+              .append("g")
+              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var colorScale = d3.scale.linear()
   .domain([0, 18])
@@ -28,48 +32,33 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
   .enter()
   .append("rect")
   .attr("x", function(d, i) { return xScale(i); })
-  .attr("y", function(d) { return h; })
+  .attr("y", function(d) { return h - yScale(d); })
   .attr("width", xScale.rangeBand())
   .attr("height", function(d) { return yScale(d); })
   .attr("fill", function(d, i) { return colorScale(i); });
 
   // Create axes
-  var now = new Date(Date.now() - duration),
-      duration = 750,
-      n = 243;
+  var xBarScale = d3.scale.ordinal()
+                  .domain(["bass", "trebble"])
+                  .range([0, w]);
 
-  var x = d3.time.scale()
-            .domain([now - (n - 2) * duration, now - duration])
-            .range([0, w]);
-  var y = d3.scale.linear()
-            .domain([0, 30])
-            .range([h, 0]);
+  var xAxis = d3.svg.axis()
+                    .scale(xBarScale)
+                    .orient("bottom")
+                    .tickFormat(function(d) { return d; })
 
   svg.append("g")
-     .attr("class", "y axis")
-     .call(d3.svg.axis().scale(y).orient("left"));
+     .attr("class", "axis")
+     .attr("transform", "translate(0, " + h + ")")
+     .call(xAxis);
 
-  var axis = svg.append("g")
-                .attr("class", "x axis")
-                .attr("transform", "translate(0," + y(0) + ")")
-                .call(x.axis = d3.svg.axis().scale(x).orient("bottom"))
-
-  // // Add x-axis labels
-  // svg.append("text")
-  //    .attr("class", "x label")
-  //    .attr("text-anchor", "end")
-  //    .attr("x", 50)
-  //    .attr("y", h + 15)
-  //    .text("frequency");
-
-  // Add y-axis labels
+  // Add x-axis label
   svg.append("text")
-     .attr("class", "y label")
-     .attr("text-anchor", "end")
-     .attr("y", 6)
-     .attr("dy", ".75em")
-     .attr("transform", "rotate(-90)")
-     .text("noise level");
+     .attr("class", "x label")
+     .attr("text-anchor", "middle")
+     .attr("x", w / 2)
+     .attr("y", h + 30)
+     .text("frequency level (Hertz)");
 
   var conn = new WebSocket("ws://10.202.117.156:3000/1");
 
