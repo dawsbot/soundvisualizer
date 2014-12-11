@@ -35,6 +35,15 @@ app.get('/livevisualdata',function(req,res){
   })
 });
 
+// Dawson's mongo data collection
+app.get('/dataAverage',function(req,res){
+  data = db.collection('noise').find({location:'microphone'}).sort({"date":-1}).toArray(function(err,result){
+   if (err) throw err;
+   res.json(result);
+  })
+});
+
+
 app.listen(13000);
 console.log('listening on port 13000');
 

@@ -27,11 +27,14 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
   .data(dataset)
   .enter()
   .append("rect")
+  //.rotate(Math.PI)
   .attr("x", function(d, i) { return xScale(i); })
   .attr("y", function(d) { return h; })
   .attr("width", xScale.rangeBand())
   .attr("height", function(d) { return yScale(d); })
   .attr("fill", function(d, i) { return colorScale(i); });
+  //.rotate(Math.PI);
+
 
 
   var conn = new WebSocket("ws://10.202.117.156:3000/1");
