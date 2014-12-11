@@ -27,9 +27,20 @@ app.get('/livedaily',function(req,res){
   res.render('livedaily/livedaily.html');
 });
 
+// path to Dawson's noise recorder
+app.get('/liveoneday',function(req,res){
+  res.render('liveoneday/visual.html');
+});
+
 // Dawson's mongo data collection
 app.get('/livevisualdata',function(req,res){
   data = db.collection('noise').find({location:'microphone'}).sort({"date":-1}).limit(1).toArray(function(err,result){
+   if (err) throw err;
+   res.json(result);
+  })
+});
+app.get('/testdata',function(req,res){
+  data = db.collection('statistics').find({"_id.l":'microphone'}).sort({"_id.q":-1}).toArray(function(err,result){
    if (err) throw err;
    res.json(result);
   })
