@@ -31,11 +31,14 @@
   .data(dataset)
   .enter()
   .append("rect")
+  //.rotate(Math.PI)
   .attr("x", function(d, i) { return xScale(i); })
   .attr("y", function(d) { return h - yScale(d); })
   .attr("width", xScale.rangeBand())
   .attr("height", function(d) { return yScale(d); })
   .attr("fill", function(d, i) { return colorScale(i); });
+  //.rotate(Math.PI);
+
 
   // Create axes
   var xBarScale = d3.scale.ordinal()
