@@ -16,6 +16,10 @@ svg { font: 10px sans-serif; }
   shape-rendering: crispEdges;
 }
 
+.x.axis path {
+  display: none;
+}
+
 .axis text {
   font-family: sans-serif;
   font-size: 11px;

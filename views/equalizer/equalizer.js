@@ -15,11 +15,11 @@
   .range([0, h]);
 
   // Create SVG element with padding
-  var svg = d3.select("body").append("svg")
-              .attr("width", w + margin.left + margin.right)
-              .attr("height", h + margin.top + margin.bottom)
-              .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svgEqualizer = d3.select("body").append("svg")
+                       .attr("width", w + margin.left + margin.right)
+                       .attr("height", h + margin.top + margin.bottom)
+                       .append("g")
+                       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var colorScale = d3.scale.linear()
   .domain([0, 18])
@@ -27,7 +27,7 @@
   .range(['#ff0000', '#00ffee']);
 
   // Create bars
-  svg.selectAll("rect")
+  svgEqualizer.selectAll("rect")
   .data(dataset)
   .enter()
   .append("rect")
@@ -47,13 +47,13 @@
                     .orient("bottom")
                     .tickFormat(function(d) { return d; })
 
-  svg.append("g")
+  svgEqualizer.append("g")
      .attr("class", "axis")
      .attr("transform", "translate(0, " + h + ")")
      .call(xAxis);
 
   // Add x-axis label
-  svg.append("text")
+  svgEqualizer.append("text")
      .attr("class", "x label")
      .attr("text-anchor", "middle")
      .attr("x", w / 2)
@@ -84,7 +84,7 @@
     yScale.domain([0, line_height]);
 
     // update all rects
-    svg.selectAll("rect")
+    svgEqualizer.selectAll("rect")
     .data(dataset)
     .transition(100)
     .duration(200)

@@ -14,9 +14,9 @@ var n = 243,
     now = new Date(Date.now() - duration),
     count = 0,
     data = d3.range(n).map(function() { return 0; });
-var margin = {top: 6, right: 0, bottom: 20, left: 40},
-    width = 1260 - margin.right,
-    height = 420 - margin.top - margin.bottom;
+var margin = {top: 50, right: 50, bottom: 50, left: 50};
+    width = 1280 - margin.left - margin.right,
+    height = 360 - margin.top - margin.bottom;
 var x = d3.time.scale()
     .domain([now - (n - 2) * duration, now - duration])
     .range([0, width]);
@@ -27,12 +27,12 @@ var line = d3.svg.line()
     .interpolate("basis")
     .x(function(d, i) { return x(now - (n - 1 - i) * duration); })
     .y(function(d, i) { return y(d); });
-var svg = d3.select("body").append("p").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .style("margin-left", -margin.left + "px")
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// Create SVG element with padding
+var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 svg.append("defs").append("clipPath")
     .attr("id", "clip")
   .append("rect")

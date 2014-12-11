@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
+    <title>Live One Day</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <style>
-    body {
-      font: 10px sans-serif;
-    }
+  </head>
 
-    .axis path,
-    .axis line {
-      fill: none;
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-
-    .x.axis path {
-      display: none;
-    }
-
-    .line {
-      fill: none;
-      stroke: black;
-      stroke-width: 2.5px;
-    }
-  </style>
   <body> 
-    <script type="text/javascript"><% include d3.js %></script>
+    <style type="text/css"><% include ../assets/main.css %></style>
+    <script type="text/javascript"><% include ../assets/d3.min.js %></script>
     <script type="text/javascript"><% include visual.js %></script>
   </body>
+
 </html>
