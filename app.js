@@ -22,7 +22,7 @@ app.get('/equalizer', function(req,res){
   res.render('equalizer/equalizer.html');
 });
 
-// path to Dawson's noise recorder
+// path to Jake's noise recorder
 app.get('/livedaily',function(req,res){
   res.render('livedaily/livedaily.html');
 });
@@ -32,7 +32,7 @@ app.get('/liveoneday',function(req,res){
   res.render('liveoneday/visual.html');
 });
 
-// Dawson's mongo data collection
+//Jake's mongo data collection
 app.get('/livevisualdata',function(req,res){
   data = db.collection('noise').find({location:'microphone'}).sort({"date":-1}).limit(1).toArray(function(err,result){
    if (err) throw err;
@@ -40,11 +40,9 @@ app.get('/livevisualdata',function(req,res){
   })
 });
 
+//Dawson's big hourly graph
 app.get('/testdata',function(req,res){
-  //var d = new Date(Date.now() - (1800000 * 48));
-  //var d = new Date(Date.now() - (86400000));
-  var d = new Date(Date.now() - (86400000 * 1.3));
-  //var d = new Date(Date.now() - (18000000 * 48));
+  var d = new Date(Date.now() - (86400000) - (1000 * 60 * (new Date()).getTimezoneOffset()));
   data = db.collection('statistics').find({"_id.l":'microphone', "_id.q": {$gt : d}}).sort({"_id.q":-1}).toArray(function(err,result){
    if (err) throw err;
    res.json(result);

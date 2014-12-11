@@ -1,6 +1,7 @@
 var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    //set screen width here
+    width = 1900 - margin.left - margin.right,
+    height = 350 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%d-%b-%y").parse;
 
@@ -31,16 +32,15 @@ var svg = d3.select("body").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     var data = [];   
-    var i = 0;
-    var counter = 0;
     var sum = 0;
-    var points = 45;//average over 15 minutes
+    var points = 60;//average every one hour
     $.ajax({url: "/testdata",async:"false",success: function(response){
       $(response).each(function(index, value){
         var myDate = new Date(value._id.q).getTime();
         var myVolume = value.avg;
         sum = sum + myVolume;
-        if ((index % points) == 1){//Every other
+        //append on hour data points to data object
+        if ((index % points) == 1){
           var tuple = {
             "timestamp" : myDate + (1000 * 60 * (new Date()).getTimezoneOffset()),
             "value" : sum / points 
@@ -49,7 +49,6 @@ var svg = d3.select("body").append("svg")
           data.push(tuple);
           sum = 0; 
         }
-        counter = counter + 1;
          
       });
       console.log(data);
