@@ -1,7 +1,7 @@
 var margin = {top: 50, right: 50, bottom: 50, left: 50};
 
 //set screen width here
-width = 1160 - margin.left - margin.right,
+width = 1600 - margin.left - margin.right,
 height = 360 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%d-%b-%y").parse;
@@ -16,12 +16,13 @@ var xAxis = d3.svg.axis()
 .scale(x)
 .ticks(16)
 .orient("bottom");
+/*
 
 var yAxis = d3.svg.axis()
 .scale(y)
 .ticks(0)
 .orient("left");
-
+*/
 var line = d3.svg.line()
 .x(function(d) { return x(d.timestamp); })
 .y(function(d) { return y(d.value); });
@@ -63,7 +64,7 @@ $.ajax({url: "/testdata",async:"false",success: function(response){
 
   svg.append("g")
   .attr("class", "y axis")
-  .call(yAxis)
+  //.call(yAxis)
   .append("text")
   .attr("transform", "rotate(-90)")
   .attr("y", -20)
@@ -73,7 +74,9 @@ $.ajax({url: "/testdata",async:"false",success: function(response){
 
   svg.append("path")
   .datum(data)
+  
   .attr("class", "line")
   .attr("d", line);
+  
 }
 });
