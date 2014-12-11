@@ -15,14 +15,14 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
   var svg = d3.select("body")
   .append("svg")
   .attr("width", w)
-  .attr("height", h);
+  .attr("height", h + 20);
 
   var colorScale = d3.scale.linear()
   .domain([0, 18])
   .interpolate(d3.interpolateHcl)
   .range(['#ff0000', '#00ffee']);
 
-  //Create bars
+  // Create bars
   svg.selectAll("rect")
   .data(dataset)
   .enter()
@@ -33,6 +33,43 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
   .attr("height", function(d) { return yScale(d); })
   .attr("fill", function(d, i) { return colorScale(i); });
 
+  // Create axes
+  var now = new Date(Date.now() - duration),
+      duration = 750,
+      n = 243;
+
+  var x = d3.time.scale()
+            .domain([now - (n - 2) * duration, now - duration])
+            .range([0, w]);
+  var y = d3.scale.linear()
+            .domain([0, 30])
+            .range([h, 0]);
+
+  svg.append("g")
+     .attr("class", "y axis")
+     .call(d3.svg.axis().scale(y).orient("left"));
+
+  var axis = svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + y(0) + ")")
+                .call(x.axis = d3.svg.axis().scale(x).orient("bottom"))
+
+  // // Add x-axis labels
+  // svg.append("text")
+  //    .attr("class", "x label")
+  //    .attr("text-anchor", "end")
+  //    .attr("x", 50)
+  //    .attr("y", h + 15)
+  //    .text("frequency");
+
+  // Add y-axis labels
+  svg.append("text")
+     .attr("class", "y label")
+     .attr("text-anchor", "end")
+     .attr("y", 6)
+     .attr("dy", ".75em")
+     .attr("transform", "rotate(-90)")
+     .text("noise level");
 
   var conn = new WebSocket("ws://10.202.117.156:3000/1");
 
@@ -60,7 +97,7 @@ var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
     // update all rects
     svg.selectAll("rect")
     .data(dataset)
-    .transition()
+    .transition(100)
     .duration(200)
     .attr("y", function(d) { return h - yScale(d); })
     .attr("height", function(d) { return yScale(d); })
