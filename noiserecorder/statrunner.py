@@ -10,16 +10,16 @@ from datetime import datetime,timedelta
 from time import sleep
 
 
-#def run(): os.system('python3 statistics.py')
 def run():
     subprocess.call('python3 statistics.py', shell=True)
-    subprocess.call('python3 iplog.py', shell=True)
-period = 15 # minutes
+    #subprocess.call('python3 iplog.py', shell=True)
+    subprocess.call('python3 iplog2.py set raspberry', shell=True)
+period = 1 # minutes
 delta = timedelta(minutes=period)
 
 
 d = datetime.now()
-d = datetime(d.year,d.month,d.day,d.hour,(d.minute//period)*period,10)
+d = datetime(d.year,d.month,d.day,d.hour,(d.minute//period)*period,5)
 
 while True:
     print('Running statistics at %s:' % str(d))
