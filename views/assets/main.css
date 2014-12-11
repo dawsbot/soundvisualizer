@@ -10,9 +10,13 @@ svg { font: 10px sans-serif; }
   stroke-width: 1.5px;
 }
 
-.axis path,
-.axis line {
+.axis path, .axis line {
   fill: none;
-  stroke: #000;
+  stroke: black;
   shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: sans-serif;
+  font-size: 11px;
 }
