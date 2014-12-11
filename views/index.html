@@ -8,39 +8,31 @@
   </head>
 
   <body>
-    <!-- Styling -->
+    <!-- Styling & D3 -->
     <style type="text/css"><% include assets/main.css %></style>
     <style type="text/css"><% include assets/bootstrap.min.css %></style>
-
-    <!-- D3 and Bootstrap -->
     <script type="text/javascript"><% include assets/d3.min.js %></script>
-    <script type="text/javascript"><% include assets/bootstrap.min.js %></script>
 
-  <!--   <div class="container">
-      <h1>Noise Visualizations!</h1>
-      <div id ="equalizer">
-        <script type="text/javascript"><% include equalizer/equalizer.js %></script>
-      </div>
-    </div> -->
-<!--       <h1>Noise Visualizations!</h1> -->
-      <!-- Visualizations -->
-      <div class="leftRow"> 
-        <h3>Equalizer</h3>
-        <p>Look above the screen to see the microphone! Make some noise and watch
+    <!-- Visualizations -->
+    <div class="leftRow">
+      <h3>Equalizer</h3>
+      <p>Look above the screen to see the microphone! Make some noise and watch
         the frequency levels change!</p>
-      </div>
-      <script type="text/javascript"><% include equalizer/equalizer.js %></script>
-      <div class="leftRow"> 
-        <h3>Live Noise</h3>
-        <p>This shows the noise level in real time. Just as the equalizer
+    </div>
+    <script type="text/javascript"><% include equalizer/equalizer.js %></script>
+
+    <div class="leftRow">
+      <h3>Live Noise</h3>
+      <p>This shows the noise level in real time. Just as the equalizer
         tracks instant data, this keeps track of that data as time progresses.</p>
-      </div>
-      <script type="text/javascript"><% include livedaily/livedaily.js %></script>
-      <div class="leftRow"> 
-        <h3>Daily Tracker</h3>
-        <p>Use this to see when the atlas lobby is most noisy throughout the day!</p>
-      </div>
-      <script type="text/javascript"><% include liveoneday/visual.js %></script>
+    </div>
+    <script type="text/javascript"><% include livedaily/livedaily.js %></script>
+
+    <div class="leftRow">
+      <h3>Daily Tracker</h3>
+      <p>Use this to see when the atlas lobby is most noisy throughout the day!</p>
+    </div>
+    <script type="text/javascript"><% include liveoneday/visual.js %></script>
   </body>
 
 </html>

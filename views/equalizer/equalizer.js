@@ -54,7 +54,7 @@
 
   // Add x-axis label
   svgEqualizer.append("text")
-     .attr("class", "x label")
+     .attr("class", "x-label")
      .attr("text-anchor", "middle")
      .attr("x", w / 2)
      .attr("y", h + 30)
