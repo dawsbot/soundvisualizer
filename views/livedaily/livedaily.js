@@ -38,16 +38,29 @@ svg.append("defs").append("clipPath")
   .append("rect")
     .attr("width", width)
     .attr("height", height);
+
+var liveYAxis = d3.svg.axis()
+                      .scale(y)
+                      .ticks(0)
+                      .orient("left")
+
 svg.append("g")
     .attr("class", "y axis")
-    .call(d3.svg.axis().scale(y).orient("left"));
+    .call(liveYAxis)
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", -20)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Loudness");
+
 var axis = svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + y(0) + ")")
     .call(x.axis = d3.svg.axis().scale(x).orient("bottom"));
 var path = svg.append("g")
     .attr("clip-path", "url(#clip)")
-  .append("path")
+    .append("path")
     .datum(data)
     .attr("class", "line");
 var transition = d3.select({}).transition()

@@ -16,7 +16,7 @@ h1 {
 }
 
 svg {
-  font: 10px sans-serif;
+  font: 15px sans-serif;
   float: left;
 }
 
@@ -40,6 +40,11 @@ svg {
   font-family: sans-serif;
   font-size: 11px;
 }
+
+.x-label text {
+  font-size: 40;
+}
+
 .leftRow {
     float: left;
     width: 250px;
