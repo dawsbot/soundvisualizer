@@ -13,6 +13,9 @@ import pymongo
 from pymongo import MongoClient
 from datetime import datetime,timedelta
 
+# Variables
+period   = 1    # minutes
+keeptime = 2*24 # hours
 
 
 # MongoDB credentials
@@ -49,10 +52,9 @@ mindate = statdb.aggregate([
                   'max' : {'$max' : '$_id.q'}
                 }
     }])['result']
-mindate = (mindate[0]['max']+timedelta(minutes=1)) if mindate else datetime(2000,1,1)
+mindate = (mindate[0]['max']+timedelta(minutes=period)) if mindate else datetime(2000,1,1)
 
 # Statistics query
-period = 15 # minutes
 now = datetime.now()
 maxdate = datetime(now.year,now.month,now.day,now.hour,(now.minute//period)*period)
 
@@ -95,7 +97,7 @@ aggregate_result = noisedb.aggregate([
         'count' : { '$sum' : 1 },
         'max' : { '$max' : '$noise.level' },
         'min' : { '$min' : '$noise.level' },
-        'avg' : { '$avg' : '$noise.level' }
+        'avg' : { '$avg' : '$noise.level' },
     }},
 
     # Limit to 10 entries for now
@@ -111,5 +113,5 @@ else:
     print('Nothing to update')
 
 # Cleanup
-rem_result = noisedb.remove({'date' : {'$lt' : datetime.now() - timedelta(hours=2*24)}})
+rem_result = noisedb.remove({'date' : {'$lt' : datetime.now() - timedelta(hours=keeptime)}})
 print('Removed    %d noise entries' % rem_result['n'])
