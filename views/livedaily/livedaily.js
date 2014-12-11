@@ -43,7 +43,10 @@ svg.append("defs").append("clipPath")
     .attr("height", height);
 svg.append("g")
     .attr("class", "y axis")
-    .call(d3.svg.axis().scale(y).orient("left"));
+    .append("text")
+    .text("Loudness")
+    .attr("transform", "rotate(-90)")
+    .call(d3.svg.axis().scale(y).ticks(0).orient("left"));
 var axis = svg.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + y(0) + ")")
