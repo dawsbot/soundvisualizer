@@ -49,7 +49,7 @@ mindate = statdb.aggregate([
                   'max' : {'$max' : '$_id.q'}
                 }
     }])['result']
-mindate = (mindate[0]['max']+timedelta(minutes=15)) if mindate else datetime(2000,1,1)
+mindate = (mindate[0]['max']+timedelta(minutes=1)) if mindate else datetime(2000,1,1)
 
 # Statistics query
 period = 15 # minutes
