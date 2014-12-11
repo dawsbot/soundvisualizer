@@ -6,9 +6,11 @@ var queue = [];
 queue.push(0);
 */
 
-var delay    = 0,   // diff between rpi and computer
+var delay    = 0,
     xdelay   = 300, // extra delay
     translen = 200,
+	tdiff    = 0,   // diff between rpi and computer
+    firstPush = true,
     duration = 1*60*1000, // milliseconds
     now = new Date(Date.now() - delay),
     data = d3.range();
@@ -20,7 +22,7 @@ function addMongoToData() {
 	var mdata = <%- JSON.stringify(data) %>;
 	var dm    = d3.max(mdata,function(d){return new Date(d.t)});
 	var ddiff = dm - Date.now() - 250;
-	data = mdata.map(function(d){return {l:d.l, t: new Date(new Date(d.t) - ddiff)}});
+	mdata.forEach(function(d){data.push({l:d.l, t: new Date(new Date(d.t) - ddiff)})});
 	console.log(d3.max(mdata,function(d){return new Date(d.t)}));
 	console.log(new Date());
 }
@@ -31,17 +33,16 @@ var conn = new WebSocket("ws://10.202.117.156:3000/2");
 conn.onpen = function(ev){
   console.log("connected");
 } 
-var cnt = 0;
 conn.onmessage = function(ev) {
    var json = JSON.parse(ev.data);
-   var ts = new Date(json.date);
-   data.push({t: ts, l:json.level});
-   if (delay === 0) {
-		delay = (new Date() - ts);
-//		addMongoToData();
+   var ts = new Date(new Date(json.date) - tdiff);
+   if (firstPush) {
+		firstPush = false;
+		tdiff = (ts - new Date());
+		addMongoToData();
 		console.log('asdasd');
 	}
-   delay = (delay-xdelay) * 0.9 + 0.1 * (new Date() - ts) + xdelay;
+   data.push({t: ts, l:json.level});
    console.log(delay-xdelay);
 }
 
