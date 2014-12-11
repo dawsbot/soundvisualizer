@@ -25,7 +25,8 @@
   var svg = d3.select("body").append("p").append("svg")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
-  .style("margin-left", -margin.left + "px")
+  //make the number larger to move it further to the right
+  .style("margin-left", (-margin.left + 50) + "px")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -91,4 +92,12 @@
 
     }).transition().each("start", tick);
   })();
+
+  svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 6)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("Noise Level")
 })()
