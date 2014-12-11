@@ -10,12 +10,14 @@ conn.onmessage = function(ev) {
    queue.push(json.level);
 }
 var n = 243,
-    duration = 750,
+    visWidth = 1600,//pixel width of scrolling bar chart
+    duration = 380,
     now = new Date(Date.now() - duration),
     count = 0,
     data = d3.range(n).map(function() { return 0; });
 var margin = {top: 50, right: 50, bottom: 50, left: 50};
-    width = 1160 - margin.left - margin.right,
+    //width = 1160 - margin.left - margin.right,
+    width = visWidth - margin.left - margin.right,
     height = 360 - margin.top - margin.bottom;
 var x = d3.time.scale()
     .domain([now - (n - 2) * duration, now - duration])
@@ -29,7 +31,8 @@ var line = d3.svg.line()
     .y(function(d, i) { return y(d); });
 // Create SVG element with padding
 var svg = d3.select("body").append("svg")
-            .attr("width", 1100)
+            //.attr("width", 1100)
+            .attr("width", visWidth)
             .attr("height", height + margin.top + margin.bottom)
             .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -51,7 +54,8 @@ var path = svg.append("g")
     .datum(data)
     .attr("class", "line");
 var transition = d3.select({}).transition()
-    .duration(750)
+    //.duration(380)
+    .duration(duration)
     .ease("linear");
 (function tick() {
   transition = transition.each(function() {
