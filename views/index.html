@@ -5,16 +5,31 @@
     <meta charset="utf-8">
     <title>Visuals!</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
   </head>
 
   <body>
-    <h1>Noise Visualizations!</h1>
+    <!-- Styling -->
     <style type="text/css"><% include assets/main.css %></style>
+    <style type="text/css"><% include assets/bootstrap.min.css %></style>
+
+    <!-- D3 and Bootstrap -->
     <script type="text/javascript"><% include assets/d3.min.js %></script>
-    <script type="text/javascript"><% include equalizer/equalizer.js %></script>
-    <script type="text/javascript"><% include livedaily/livedaily.js %></script>
-    <script type="text/javascript"><% include liveoneday/visual.js %></script>
+    <script type="text/javascript"><% include assets/bootstrap.min.js %></script>
+
+    <div class="container">
+      <h1>Noise Visualizations!</h1>
+
+      <div class="row">
+        <div class="col-xs-4 col-xs-offset-10">
+          <p>You think water moves fast? You should see ice. It moves like it has a mind. Like it knows it killed the world once and got a taste for murder. After the avalanche, it took us a week to climb out. Now, I don't know exactly when we turned on each other, but I know that seven of us survived the slide... and only five made it out. Now we took an oath, that I'm breaking now. We said we'd say it was the snow that killed the other two, but it wasn't. Nature is lethal but it doesn't hold a candle to man.</p>
+        </div>
+        <script type="text/javascript"><% include equalizer/equalizer.js %></script>
+      </div>
+    </div>
+
+      <!-- Visualizations -->
+      <script type="text/javascript"><% include livedaily/livedaily.js %></script>
+      <script type="text/javascript"><% include liveoneday/visual.js %></script>
   </body>
 
 </html>

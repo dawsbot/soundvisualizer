@@ -1,8 +1,15 @@
+body {
+  background: #ededed;
+}
+
 h1 {
   text-align: center;
 }
 
-svg { font: 10px sans-serif; }
+svg {
+  font: 10px sans-serif;
+  float: left;
+}
 
 .line {
   fill: none;
