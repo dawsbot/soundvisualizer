@@ -31,3 +31,22 @@ svg {
   font-family: sans-serif;
   font-size: 11px;
 }
+.leftRow {
+    float: left;
+    width: 250px;
+    height: 360px;
+    margin-right: 8px;
+    margin-left: 3px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    border-bottom-width: 5px; 
+    font-size: 15pt;
+}
+.leftRow h3{
+  text-align: center;
+}
+.leftRow p{
+  margin-left: 5px;
+  margin-top: 60px;
+}
