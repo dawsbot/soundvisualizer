@@ -12,10 +12,12 @@ var y = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
     .scale(x)
+    .ticks(24)
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
     .scale(y)
+    .ticks(0)
     .orient("left");
 
 var line = d3.svg.line()
@@ -28,20 +30,15 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//    d3.json("data.json", function(error, data) {
- 
     var data = [];   
     var i = 0;
     var counter = 0;
     var sum = 0;
-    var points = 15;//average over 15 minutes
+    var points = 45;//average over 15 minutes
     $.ajax({url: "/testdata",async:"false",success: function(response){
       $(response).each(function(index, value){
-        //console.log(value);
         var myDate = new Date(value._id.q).getTime();
         var myVolume = value.avg;
-        //console.log("mydate: " + myDate);
-        //console.log("myVolume: " + myVolume);
         sum = sum + myVolume;
         if ((index % points) == 1){//Every other
           var tuple = {
@@ -52,22 +49,11 @@ var svg = d3.select("body").append("svg")
           data.push(tuple);
           sum = 0; 
         }
-        //data.push(tuple);
         counter = counter + 1;
          
       });
       console.log(data);
-      /*console.log(new Date(response[i]._id.q).getTime());
-      console.log(response[i].avg);
-      var myDate = new Date(response[i]._id.q).getTime();
-      var myVolume = response[i].avg;
-      data.push({"timestamp": myDate, "value": myVolume});
-      console.log(data);*/
-/*
-      jsonData = response[0].noise.level;
-      data.push(jsonData);
-      console.log("data: " + data);
-*/
+
   x.domain(d3.extent(data, function(d) { return d.timestamp; }));
   y.domain(d3.extent(data, function(d) { return d.value; }));
 
@@ -84,7 +70,7 @@ var svg = d3.select("body").append("svg")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Price ($)");
+      .text("Loudness");
 
   svg.append("path")
       .datum(data)
@@ -93,10 +79,3 @@ var svg = d3.select("body").append("svg")
 
       }
     });
- // data.forEach(function(d) {
-    //d.date = +(d.date);
-    //d.close = +d.close;
-	//d.date = 10;
-	//d.close = 100;
-	//});
-  //console.log("data: " + data);
