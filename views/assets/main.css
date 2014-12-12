@@ -47,17 +47,14 @@ svg {
 
 .leftRow {
     float: left;
-    width: 640px;
+    width: 620px;
     height: 360px;
     padding-left: 30px;
     padding-right: 30px;
-    margin-right: 8px;
-    margin-left: 3px;
     border-style: solid;
     border-width: 3px;
     border-color: black;
-    /*border-bottom-width: 5px;*/ 
-    border-bottom-width: 0; 
+    border-bottom-width: 0;
     font-size: 15pt;
 }
 .leftRow h3{
