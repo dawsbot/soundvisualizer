@@ -52,7 +52,7 @@ svg.append("g")
     .call(liveYAxis)
     .append("text")
     .attr("transform", "rotate(-90)")
-    .attr("y", -20)
+    .attr("y", -25)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
     .text("Loudness");
