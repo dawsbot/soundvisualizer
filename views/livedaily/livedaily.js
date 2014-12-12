@@ -10,7 +10,7 @@ conn.onmessage = function(ev) {
    queue.push(json.level);
 }
 var n = 243,
-    visWidth = 1280, //pixel width of scrolling bar chart
+    visWidth = 1260, //pixel width of scrolling bar chart
     duration = 360,
     now = new Date(Date.now() - duration),
     count = 0,

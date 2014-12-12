@@ -1,6 +1,6 @@
   var margin = {top: 50, right: 50, bottom: 50, left: 50};
 
-  var w = 1280 - margin.left - margin.right;
+  var w = 1260 - margin.left - margin.right;
   var h = 360 - margin.top - margin.bottom;
 
   // Initialize all rects to zero
