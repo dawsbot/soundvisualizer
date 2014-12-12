@@ -14,7 +14,7 @@ var y = d3.scale.linear()
 
 var xAxis = d3.svg.axis()
 .scale(x)
-.ticks(16)
+.ticks(8)
 .orient("bottom");
 
 var yAxis = d3.svg.axis()
@@ -66,7 +66,7 @@ $.ajax({url: "/testdata",async:"false",success: function(response){
   .call(yAxis)
   .append("text")
   .attr("transform", "rotate(-90)")
-  .attr("y", -20)
+  .attr("y", -25)
   .attr("dy", ".71em")
   .style("text-anchor", "end")
   .text("Loudness");

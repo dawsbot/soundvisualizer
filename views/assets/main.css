@@ -3,8 +3,8 @@
 
 
 div p  { font-family: 'Open Sans', sans-serif;}
-div p  { font-family: 'Roboto Condensed', sans-serif; font-size: 22px; }
-div h3 { font-family: 'Poiret One', cursive;  font-size: 43px; }
+div p  { font-family: 'Roboto Condensed', sans-serif; font-size: 35px; }
+div h3 { font-family: 'Poiret One', cursive;  font-size: 60px; }
 
 
 body {
@@ -16,7 +16,7 @@ h1 {
 }
 
 svg {
-  font: 15px sans-serif;
+  font: 25px sans-serif;
   float: left;
 }
 
@@ -38,7 +38,7 @@ svg {
 
 .axis text {
   font-family: sans-serif;
-  font-size: 11px;
+  font-size: 20px;
 }
 
 .x-label text {
@@ -49,6 +49,8 @@ svg {
     float: left;
     width: 640px;
     height: 360px;
+    padding-left: 30px;
+    padding-right: 30px;
     margin-right: 8px;
     margin-left: 3px;
     border-style: solid;
