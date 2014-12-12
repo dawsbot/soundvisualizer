@@ -1,7 +1,7 @@
 var margin = {top: 50, right: 50, bottom: 50, left: 50};
 
 //set screen width here
-width = 1600 - margin.left - margin.right,
+width = 1280 - margin.left - margin.right,
 height = 360 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%d-%b-%y").parse;
