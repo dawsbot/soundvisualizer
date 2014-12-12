@@ -1,0 +1,67 @@
+/*@import url(http://fonts.googleapis.com/css?family=Poiret+One|Open+Sans);*/
+@import url(http://fonts.googleapis.com/css?family=Poiret+One|Open+Sans|Roboto|Roboto+Condensed);
+
+
+div p  { font-family: 'Open Sans', sans-serif;}
+div p  { font-family: 'Roboto Condensed', sans-serif; font-size: 22px; }
+div h3 { font-family: 'Poiret One', cursive;  font-size: 43px; }
+
+
+body {
+  background: #ededed;
+}
+
+h1 {
+  text-align: center;
+}
+
+svg {
+  font: 15px sans-serif;
+  float: left;
+}
+
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.axis path, .axis line {
+  fill: none;
+  stroke: black;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+}
+
+.x-label text {
+  font-size: 40;
+}
+
+.leftRow {
+    float: left;
+    width: 250px;
+    height: 360px;
+    margin-right: 8px;
+    margin-left: 3px;
+    border-style: solid;
+    border-width: 3px;
+    border-color: black;
+    /*border-bottom-width: 5px;*/ 
+    border-bottom-width: 0; 
+    font-size: 15pt;
+}
+.leftRow h3{
+  text-align: center;
+}
+.leftRow p{
+  margin-left: 5px;
+  margin-top: 60px;
+}
