@@ -10,8 +10,8 @@ conn.onmessage = function(ev) {
    queue.push(json.level);
 }
 var n = 243,
-    visWidth = 1600,//pixel width of scrolling bar chart
-    duration = 380,
+    visWidth = 1280, //pixel width of scrolling bar chart
+    duration = 360,
     now = new Date(Date.now() - duration),
     count = 0,
     data = d3.range(n).map(function() { return 0; });
